@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "http://127.0.0.1:5500/index.html",
+  "start_url": "/colorSnap",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
