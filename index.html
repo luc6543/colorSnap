@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <!-- Vereiste meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <meta name="description" content="Schrijf hier de omschrijving over jouw App.">
+    <meta name="description" content="App die test">
+    <meta name="msapplication-TileColor" content="#ffa600">
+    <meta name="theme-color" content="#ffa600">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <link rel="manifest" href="manifest.json" />
+    
+    <link rel="stylesheet" href="img.css">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+
+    <script>
+        window.addEventListener("load",()=>{
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+          }
+        })
+    </script>
+    <style>
+        html {
+            margin: 0;
+            /* height: 100vh; */
+            overflow-x: hidden;
+            /* width: 100vw; */
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        :root {
+            --mdc-theme-primary: #b9b9b9 !important;
+        }
+
+        .hidden,
+        .eapps-widget-toolbar-panel {
+            display: none;
+        }
+
+        .bottom {
+            z-index: 100;
+            background-color: #FFFFFF;
+            position: fixed;
+            bottom: 0;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        }
+
+        .sheet-out-of-view-left {
+            margin-left: -100%;
+        }
+
+        .sheet-out-of-view-right {
+            margin-left: 100%;
+            position: fixed;
+        }
+
+        main {
+            /* width: 100%; */
+            /* sick ass animations */
+            transition: 0.3s ease;
+        }
+
+        /* CUSTOM SEARCH BAR */
+        .search-bar-wrapper {
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+            padding: 10px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            background-color: #efedf0;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bottom-settings-searchbar {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+
+        /* REPOSITION THE SETTING DROPDOWN TO MATCH BUTTON */
+        .dropdown-search-settings,
+        .dropdown-orientation-settings,
+        .dropdown-color-settings {
+            margin-left: 220px;
+        }
+
+
+        .search-bar-wrapper input {
+            border: none;
+            caret-color: transparent;
+        }
+
+        /* Align de dropdown beter met de search bar */
+        .mdc-menu {
+            margin-top: 30px;
+            user-select: none;
+        }
+
+        /* remove the border from the input field */
+        .mdc-notched-outline__notch {
+            border: none !important;
+        }
+
+        /* align the placeholder with the input field */
+        .mdc-floating-label {
+            margin-left: 10px;
+        }
+
+        .mdc-card {
+            padding: 16px;
+            height: fit-content;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        .cards-holder {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding:
+                10px 0px 10px 0;
+        }
+
+        /* Dropdown menu's for search settings */
+        .mdc-list-item {
+            padding: 10px;
+            display: flex;
+        }
+
+        .mdc-menu-custom {
+            width: 40%;
+        }
+
+        .dropdown-color-settings {
+            margin-top: 120px;
+            margin-left: 53%;
+        }
+
+        .dropdown-orientation-settings {
+            margin-top: 120px;
+            margin-left: 6.5%;
+        }
+
+        .mdc-button--search-settings {
+            width: 40%;
+        }
+
+
+
+        /* share button CSS */
+        .mdc-button--share {
+            width: 95%;
+            margin: auto;
+        }
+
+        .no-overflow {
+            overflow: hidden;
+        }
+
+        .dropdown-api-endpoint {
+            margin-left: 40px;
+            margin-top: 40px;
+        }
+
+        /* SETS SNACKBAR TO FRONT LAYER AND NOT ON TOP OF MENU*/
+        .mdc-snackbar {
+            z-index: 99999999999999999;
+            bottom: 50px;
+        }
+
+        /* MAKE SNACKBAR BACKGROUNDWHITE */
+        .mdc-snackbar__surface {
+            background-color: #ececec;
+        }
+
+        .mdc-snackbar__label {
+            color: #333;
+        }
+
+        /* SETS INFO LINES ON SAVED IMG's TO ALIGN */
+        .mdc-saved-row {
+            display: flex;
+            align-items: center;
+        }
+
+        /* CHANGE COLORS OF DELETE SAVED IMAGE BUTTON */
+        .mdc-button--delete {
+            width: fit-content;
+            border-color: rgba(204, 50, 50, 0.418) !important;
+            color: rgba(204, 50, 50, 0.418) !important;
+        }
+
+        /* HOMEPAGE TOP CSS */
+        .home-beautiful {
+            background-size: cover;
+            width: 100%;
+            height: 292px;
+            background-image: url('https://t3.ftcdn.net/jpg/06/06/79/70/360_F_606797008_rGPPk6bFWDQydnX7g7w1w9dVVZ4mD22J.jpg');
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .home-filter {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            width: 100%;
+            height: 292px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .home-text-card {
+            padding: 10px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .home-pop-searches {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .list-searches {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+
+        .home-setting {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            margin-top: 5rem;
+            justify-content: center;
+        }
+    </style>
+
+    <!-- Material.io bestanden (JS en registratie componenten) -->
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script>const MDCBanner = mdc.banner.MDCBanner; const MDCCheckbox = mdc.checkbox.MDCCheckbox; const MDCChip = mdc.chips.MDCChip; const MDCChipSet = mdc.chips.MDCChipSet; const MDCCircularProgress = mdc.circularProgress.MDCCircularProgress; const MDCDataTable = mdc.dataTable.MDCDataTable; const MDCDialog = mdc.dialog.MDCDialog; const MDCDrawer = mdc.drawer.MDCDrawer; const MDCFloatingLabel = mdc.floatingLabel.MDCFloatingLabel; const MDCFormField = mdc.formField.MDCFormField; const MDCIconButtonToggle = mdc.iconButton.MDCIconButtonToggle; const MDCLineRipple = mdc.lineRipple.MDCLineRipple; const MDCLinearProgress = mdc.linearProgress.MDCLinearProgress; const MDCList = mdc.list.MDCList; const MDCMenu = mdc.menu.MDCMenu; const MDCMenuSurface = mdc.menuSurface.MDCMenuSurface; const MDCNotchedOutline = mdc.notchedOutline.MDCNotchedOutline; const MDCRadio = mdc.radio.MDCRadio; const MDCRipple = mdc.ripple.MDCRipple; const MDCSegmentedButton = mdc.segmentedButton.MDCSegmentedButton; const MDCSelect = mdc.select.MDCSelect; const MDCSlider = mdc.slider.MDCSlider; const MDCSnackbar = mdc.snackbar.MDCSnackbar; const MDCSwitch = mdc.switchControl.MDCSwitch; const MDCTabBar = mdc.tabBar.MDCTabBar; const MDCTextField = mdc.textField.MDCTextField; const MDCTooltip = mdc.tooltip.MDCTooltip; const MDCTopAppBar = mdc.topAppBar.MDCTopAppBar;</script>
+</head>
+
+
+<body>
+
+    <!-- 
+        *
+        *   HOME TAB
+        *
+     -->
+
+    <main class="active-sheet" id="home-sheet">
+
+        <div class="home-beautiful">
+            <div class="home-filter">
+                <div class="mdc-touch-target-wrapper" id="homepageButtonTop">
+                    <button class="mdc-button mdc-button--touch">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__touch"></span>
+                        <span class="mdc-button__label">Snap your pictures today</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-pop-searches">
+            <div class="mdc-touch-target-wrapper">
+                <button class="mdc-button mdc-button--touch">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__touch"></span>
+                    <span class="mdc-button__label">Populair searches</span>
+                </button>
+            </div>
+            <div class="list-searches">
+                <button class="mdc-button mdc-button--outlined home-pop-search-btn">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label" id="homeRandomSearch1"></span>
+                </button>
+                <button class="mdc-button mdc-button--outlined home-pop-search-btn">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label" id="homeRandomSearch2"></span>
+                </button>
+                <button class="mdc-button mdc-button--outlined home-pop-search-btn">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label" id="homeRandomSearch3"></span>
+                </button>
+            </div>
+        </div>
+        <div class="home-setting">
+            <li class="mdc-list-item" tabindex="0" data-mdc-dialog-action="none">
+                <button class="mdc-button mdc-button--outlined mdc-button--delete mdc-button--share" id="delete-data">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label" style="display:flex;"><span class="material-symbols-outlined">
+                            Delete
+                        </span>Delete data</span>
+                </button>
+            </li>
+        </div>
+    </main>
+    <div class="mdc-dialog" id="remove-all-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Delete all saved images?
+                </div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Cancel</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="discard"
+                        id="delete-convermation">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+    <!-- 
+        *
+        *   PHOTO TAB
+        *
+     -->
+    <main class="sheet-out-of-view-right" id="photo-sheet">
+
+
+        <video autoplay="true" id="videoElement">
+
+        </video>
+        <div class="mdc-card make-photo-canvas-holder">
+            <div class="mdc-card__primary-action" tabindex="0">
+                <div class="mdc-card__ripple"></div>
+            </div>
+            <canvas id="canvas" width="320" height="240">
+            </canvas>
+        </div>
+        <button class="mdc-button mdc-button--outlined" id="makeImage">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Snap & Save</span>
+        </button>
+        </div>
+
+
+    </main>
+    <!--
+        * 
+        *   SEARCH TAB
+        *   
+    -->
+    <main class="sheet-out-of-view-right no-overflow" id="search-sheet">
+
+        <!-- TOP SETTINGS -->
+        <div style="display: flex; flex-wrap: wrap;">
+            <!-- SEARCH BAR -->
+            <div class="search-bar-wrapper mdc-menu-surface--anchor">
+                
+                <div class="flex items-center">
+                    <!-- Dropdown icon   -->
+                    <span class="mdc-tab__icon material-icons " id="dropdownBtn">
+                        menu
+                    </span>
+    
+    
+                    <!-- input field -->
+                    <label class="mdc-text-field ">
+                        <span class="mdc-notched-outline__notch">
+                            <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id"
+                                placeholder="text" id="photoSearchInp">
+                            <span class="mdc-floating-label" id="placeholder-id">Search <span
+                                    id="placeholder-api-call">Pexels</span></span>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Search button -->
+
+
+                <span class="mdc-tab__icon material-icons" aria-hidden="true" id="search-button">search</span>
+
+            </div>
+
+            <!-- Extre settings button (E.G. orientation / color) -->
+            <div class="bottom-settings-searchbar">
+
+                <button class="mdc-button mdc-button--outlined mdc-button--search-settings"
+                    id="dropdown-btn-orientation">
+                    <span class="mdc-button__ripple"></span>
+                    <!-- Use icons -->
+                    <span class="mdc-button__label" id="lbl-orientation">Orientation<span
+                            id="currOrientation"></span></span>
+                </button>
+                <button class="mdc-button mdc-button--outlined mdc-button--search-settings" id="dropdown-btn-color">
+                    <span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label" id="lbl-color">Color<span id="currColor"></span></span>
+                </button>
+            </div>
+
+
+        </div>
+        <div id="search-cards-holder" class="cards-holder">
+            <!-- ALL CARDS COME HERE -->
+
+        </div>
+    </main>
+    <!-- Dropdown color <hidden>-->
+    <div class="mdc-menu mdc-menu-surface mdc-menu-custom dropdown-color-settings" id="">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+            <li class="mdc-list-item" role="menuitem" id="color-btn" data-content="yellow">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Yellow</span>
+
+            </li>
+            <li class="mdc-list-item" role="menuitem" id="color-btn" data-content="blue">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Blue</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem" id="color-btn" data-content="green">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Green</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem" id="color-btn" data-content="white">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">White</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem" id="color-btn" data-content="black">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Black</span>
+            </li>
+        </ul>
+    </div>
+    <!-- Dropdown Orientation <hidden> -->
+    <div class="mdc-menu mdc-menu-custom mdc-menu-surface dropdown-orientation-settings" id="">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+            <li class="mdc-list-item" role="menuitem" data-content="all" id="orientation-btn">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">All</span>
+
+            </li>
+            <li class="mdc-list-item orientation-square" role="menuitem" data-content="square" id="orientation-btn">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Square</span>
+            </li>
+            <li class="mdc-list-item orientation-portrait" role="menuitem" data-content="portrait" id="orientation-btn">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Portrait</span>
+            </li>
+            <li class="mdc-list-item orientation-landscape" role="menuitem" data-content="landscape"
+                id="orientation-btn">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">landscape</span>
+            </li>
+        </ul>
+    </div>
+    <!-- Dropdown <hidden> -->
+    <div class="mdc-menu mdc-menu-surface dropdown-api-endpoint">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+            <li class="mdc-list-item" role="menuitem">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text btn-api-point" data-content="pexels">Pexels</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text btn-api-point" data-content="unsplash">Unsplash</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text btn-api-point" data-content="pixabay">Pixabay</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 
+        *
+        *   BOOKMARK TAB
+        *
+     -->
+    <main class="sheet-out-of-view-right" id="bookmark-sheet">
+        <div id="bookmark-holder" class="cards-holder">
+
+            <!-- SAVED CARD EXAMPLE -->
+
+        </div>
+        <script>
+        </script>
+    </main>
+
+
+
+    <!-- * SNACKBAR  -->
+    <aside class="mdc-snackbar">
+        <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+            <div class="mdc-snackbar__label" aria-atomic="false">
+                Can't send photo. Retry in 5 seconds.
+            </div>
+            <div class="mdc-snackbar__actions" aria-atomic="true">
+                <button type="button" class="mdc-button mdc-snackbar__action">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label">Close</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+    <!-- * BOTTOM MENU -->
+    <div class="mdc-tab-bar bottom " role="tablist">
+        <div class="mdc-tab-scroller">
+        </div>
+        <div class="mdc-tab-scroller__scroll-area" id="bottom-menu-holder">
+            <!-- HOME BUTTON -->
+            <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--active btn-bottom-menu" role="tab" aria-selected="true" tabindex="0"
+                    name="home-sheet">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">home</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+            </div>
+            <!-- PHOTO BUTTON -->
+            <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--active btn-bottom-menu" role="tab" aria-selected="true" tabindex="0"
+                    name="photo-sheet">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">photo_camera</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+            </div>
+            <!-- SEARCH BUTTON -->
+            <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--active btn-bottom-menu" role="tab" aria-selected="true" tabindex="0"
+                    name="search-sheet">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">search</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+            </div>
+            <!-- BOOKMARK BUTTON -->
+            <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--active btn-bottom-menu" role="tab" aria-selected="true" tabindex="0"
+                    name="bookmark-sheet">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">bookmarks</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/snackbar.js"></script>
+    <script src="scripts/localStorage.js"></script>
+    <script src="scripts/cardEventlisteners.js"></script>
+    <script src="scripts/api-custom.js"></script>
+    <script src="scripts/pexelsCall.js"></script>
+    <script src="scripts/unsplashCall.js"></script>
+    <script src="scripts/pixabayCall.js"></script>
+    <script src="scripts/save.js"></script>
+    <script src="scripts/loadSaved.js"></script>
+    <script src="scripts/onload.js"></script>
+    <script src="scripts/photo.js"></script>
+    <script src="scripts/homepage.js"></script>
+
+
+    <script>
+        // search page dropdown
+        const menuEndpoint = new MDCMenu(document.querySelector('.dropdown-api-endpoint'));
+        document.querySelector('#dropdownBtn').addEventListener('click', () => {
+            menuEndpoint.open = true;
+        });
+
+        // remove placeholder upon typing in inp
+        document.getElementById('photoSearchInp').addEventListener('input', () => {
+            if (document.getElementById('photoSearchInp').value === '') {
+                document.getElementById('placeholder-id').innerHTML = `Search <span
+                                id="placeholder-api-call">${currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1)}</span>`;
+            } else {
+                document.getElementById('placeholder-id').innerHTML = '';
+            }
+        })
+
+
+        // Func for bottom menu
+        // Selects all buttons
+        document.querySelectorAll('.btn-bottom-menu').forEach(button => {
+            button.addEventListener('click', () => {
+                // Removes out of view class by getting name from button that is also the id of the sheet
+                if (document.querySelector('.active-sheet') !== null) {
+                    document.querySelectorAll('.active-sheet').forEach(act => {
+                        act.classList.add('sheet-out-of-view-right');
+                    })
+                }
+                document.querySelector('#' + button.name).classList.remove('sheet-out-of-view-right');
+                document.querySelector('#' + button.name).classList.add('active-sheet');
+            });
+        })
+
+
+    </script>
+
+    <!-- EXTRA SETTINGS FOR SEARCHING AND SHARING-->
+    <script>
+
+        // CHANGE THE orientation WHEN SELECTED
+        document.querySelectorAll('#orientation-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                orientation = btn.getAttribute('data-content');
+                document.querySelector('#lbl-orientation').innerHTML = orientation;
+            });
+        });
+
+        // CHANGE THE color WHEN SELECTED
+        document.querySelectorAll('#color-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                color = 'color=' + btn.getAttribute('data-content');                   // De color word met color= opgeslagen omdat als je geen color hebt je niet een lege parameter wilt doorsturen naar de api.
+                document.querySelector('#lbl-color').innerHTML = color.split('=')[1]; // aangezien color word opgeslagen als COLOR=green split die de string in tweeen zodat je alleen de kleur hebt
+            });
+        });
+
+
+
+        const colorSetting = new MDCMenu(document.querySelector('.dropdown-color-settings'));
+        document.querySelector('#dropdown-btn-color').addEventListener('click', () => {
+            colorSetting.open = true;
+        });
+        const orientationSetting = new MDCMenu(document.querySelector('.dropdown-orientation-settings'));
+        document.querySelector('#dropdown-btn-orientation').addEventListener('click', () => {
+            orientationSetting.open = true;
+        });
+
+
+    </script>
+    <!-- API SETTINGS / CALLS -->
+    <script>
+
+        const unsplashKey = `wj8aChJUAC2INucwlNEo1A6QQM8r_peWVL-okl_FeBg`;
+        const pexelsKey = `lxCzmL0zI12Sw4UdSufPVtHQuskaJIsKvfN8oG2SmAtTQiBj6p6P2vIn`;
+        const pixabayKey = `43930027-0dd439b78e38bfa692283b2c3`;
+
+        // Maybe advance this with local storage?
+        let currentApiCall = 'pexels';
+        let orientation = '';
+        let color = '';
+
+        // CHANGE PLACEHOLDER WHEN NEW API IS SET
+        document.querySelectorAll('.btn-api-point').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentApiCall = btn.getAttribute('data-content');
+                document.getElementById('placeholder-api-call').innerHTML = currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1);
+                specificApiSettings();
+            })
+        });
+
+        // SINCE EACH API HAS DIFFERENT PARAMS SOME SETTINGS CANT BE USED
+        function specificApiSettings() {
+            // reset each button from orientation setting.
+            document.querySelectorAll('#orientation-btn').forEach(btn => {
+                btn.classList.remove('hidden');
+            })
+
+            // hides buttons that cant be used with selected api   
+            if (currentApiCall == 'pixabay') {
+                // The pixabay api does NOT support square orientations.
+                document.querySelector('.orientation-square').classList.add('hidden');
+            }
+        }
+
+
+
+
+    </script>
+    <script>
+        // API CALL
+        document.querySelector('#search-button').addEventListener('click', () => {
+
+            // CLEAR THE CURRENT IMAGES.
+            document.querySelector('#search-cards-holder').innerHTML = "";
+            let query = document.getElementById('photoSearchInp').value;
+
+            // QUERY LENGTH HANDLING
+            if (query.length > 15) {
+                openSnackbar("Query cannot be longer than 15 characters");
+                return
+            }
+            if (query.length < 2) {
+                openSnackbar("Query cannot be shorter than 2 characters");
+                return
+            }
+
+            // GENERATE THE ENDPOINT
+            let endpoint;
+            switch (currentApiCall) {
+                case 'pexels':
+                    endpoint = `https://api.pexels.com/v1/search?query=${query}&per_page=10&orientation=${orientation}&${colToHex(color)}`;
+                    makePexelsCall(endpoint, query, orientation, color);
+                    break;
+
+                case 'unsplash':
+                    endpoint = `https://api.unsplash.com/search/photos/?client_id=${unsplashKey}&query=${query}&per_page=10&${color}&${fixOrientation(orientation)}`;
+                    makeUnsplashCall(endpoint, query, orientation, color);
+                    break;
+
+                case 'pixabay':
+                    endpoint = `https://pixabay.com/api/?key=${pixabayKey}&q=${query}&image_type=photo$${color}&per_page=10${fixOrientation(orientation)}`;
+                    makePixabayCall(endpoint, query, orientation, color);
+                    break;
+
+                default:
+                    break;
+            }
+            console.log(endpoint);
+
+        });
+
+
+    </script>
+
+
+</body>
+
+</html>
+
+<!-- Possible warning when chars of input exceed 20 -->
+<!-- Like and dislike images? using the api, when you can like with api make it likeable. -->
+<!-- Select own color? -->
+<!-- Progress indicators -->
+<!-- possible save lower quality images. -->

@@ -1,0 +1,16 @@
+#videoElement {
+    width: 500px;
+}
+
+#makeImage {
+    position: absolute;
+    bottom: 70px;
+    margin: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.make-photo-canvas-holder{
+    margin: auto;
+    margin-top: 5px;
+}
