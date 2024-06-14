@@ -2,6 +2,7 @@
 
 // * Maakt de Unsplash API call. 
 // Heeft nodig: Endpoint. mogelijk: query, orientation, color
+// Elke endpoint heeft zijn eigen functie omdat de json steeds anders is.
 
 function makeUnsplashCall(endpoint, query, orientation, color) { 
  
@@ -12,6 +13,7 @@ function makeUnsplashCall(endpoint, query, orientation, color) {
             // elke fetch geeft 10 foto's terug. via een foreach word door elke foto geloopt.
             // eerst wordt er een div aangemaakt. deze div heeft een innerHTML die word aangepast via variables
             // elk klikbaar item heeft een CLASS of ID met de index (0 tot 9) zodat ze 
+
             result.results.forEach((photo, index) => {
                 let imgCard = document.createElement('div');
                 imgCard.classList = `mdc-card mdc-card-${index}`;
