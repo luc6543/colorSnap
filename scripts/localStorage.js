@@ -5,6 +5,7 @@ function setSavedInt(){
     }
     savedInteger = localStorage.getItem('savedInteger');
 }
+
 function incementSavedInt(){
     let a = getSavedInt();
     a++;
@@ -29,7 +30,6 @@ function getEmpty(){
     let a = getSavedInt();
     console.log(a);
     for (let index = 0; index < a; index++) {
-        console.log("index " + index + ":" + localStorage.getItem(index));
         if(localStorage.getItem(index) === null){
             return index;
         }

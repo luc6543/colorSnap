@@ -1,14 +1,16 @@
 
 function loadSaved() {
     
-    // CHECKT OF DE holder NIET LEEG IS
+    // CLEART DE SAVED IMAGE HOLDER
     if(!document.querySelector('#bookmark-holder').innerHTML == ''){
         document.querySelector('#bookmark-holder').innerHTML = ''
     } 
 
+    // HAALT VIA getSavedInt AANtAL OPGESLAGEN ITEMS OP EN VIA FOR LOOP LOOPT ERDOORHEEN
     const totalSavedImages = parseInt(getSavedInt());
     for (let index = 0; index < totalSavedImages + 1; index++) {
         const item = localStorage.getItem(index);
+        // omdat er ook lege indexes kunnen zijn moet er gecheckt worden of de image bestaat
         if (item) {
             const parsedItem = JSON.parse(item);
             const image = parsedItem.img;
@@ -23,6 +25,8 @@ function loadSaved() {
 
 function insertSaved(image, query, url, color, index, orientation) {
     const newDiv = document.createElement('div');
+
+    // als er geen kleur or orientatie is ingevuld word dat hier gedaan
     if(!orientation){
         orientation = 'All aspects';
     }
@@ -67,7 +71,7 @@ function insertSaved(image, query, url, color, index, orientation) {
                 <button class="mdc-button mdc-button--outlined mdc-button--share" id="copy-img-url-saved-${index}" >
                 <span class="mdc-button__ripple"></span>
                 <!-- Use icons -->
-                <span class="mdc-button__label" style="display:flex; " id="url-${index}" data-content="${url}"><span class="material-symbols-outlined">
+                <span class="mdc-button__label" style="display:flex; " id="url-saved-${index}" data-content="${url}"><span class="material-symbols-outlined">
                 content_copy
                 </span>Copy URL</span>
                 </button>

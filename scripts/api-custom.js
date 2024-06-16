@@ -19,14 +19,11 @@ function fixOrientation(orientation) {
         switch (orientation) {
             case 'landscape':
                 return '&orientation=horizontal'
-                break;
             case 'portrait':
                 return '&orientation=vertical'
-                break;
 
             default:
                 return '';
-                break;
         }
     }
     if (orientation == 'square' && currentApiCall == 'unsplash') {

@@ -15,20 +15,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
     <link rel="manifest" href="manifest.json" />
-    
+
     <link rel="stylesheet" href="img.css">
     <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/x-icon" href="images/icons/icon-128x128.png">
 
     <script>
-        window.addEventListener("load",()=>{
-          if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-          }
+        window.addEventListener("load", () => {
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("service-worker.js");
+            }
         })
     </script>
     <style>
@@ -383,14 +383,14 @@
         <div style="display: flex; flex-wrap: wrap;">
             <!-- SEARCH BAR -->
             <div class="search-bar-wrapper mdc-menu-surface--anchor">
-                
+
                 <div class="flex items-center">
                     <!-- Dropdown icon   -->
                     <span class="mdc-tab__icon material-icons " id="dropdownBtn">
                         menu
                     </span>
-    
-    
+
+
                     <!-- input field -->
                     <label class="mdc-text-field ">
                         <span class="mdc-notched-outline__notch">
@@ -598,28 +598,12 @@
     <script src="scripts/onload.js"></script>
     <script src="scripts/photo.js"></script>
     <script src="scripts/homepage.js"></script>
-
+    <script src="scripts/push-pop-handler.js"></script>
+    <script src="scripts/searchpage.js"></script>
 
     <script>
-        // search page dropdown
-        const menuEndpoint = new MDCMenu(document.querySelector('.dropdown-api-endpoint'));
-        document.querySelector('#dropdownBtn').addEventListener('click', () => {
-            menuEndpoint.open = true;
-        });
-
-        // remove placeholder upon typing in inp
-        document.getElementById('photoSearchInp').addEventListener('input', () => {
-            if (document.getElementById('photoSearchInp').value === '') {
-                document.getElementById('placeholder-id').innerHTML = `Search <span
-                                id="placeholder-api-call">${currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1)}</span>`;
-            } else {
-                document.getElementById('placeholder-id').innerHTML = '';
-            }
-        })
-
-
-        // Func for bottom menu
-        // Selects all buttons
+        // * FUNCTION THAT HANDLES THE "page switching".
+        // It selects all bottom btn's and add click event to each. if not active sheet each active sheet get removed and clicked button gets shown
         document.querySelectorAll('.btn-bottom-menu').forEach(button => {
             button.addEventListener('click', () => {
                 // Removes out of view class by getting name from button that is also the id of the sheet
@@ -636,79 +620,8 @@
 
     </script>
 
-    <!-- EXTRA SETTINGS FOR SEARCHING AND SHARING-->
     <script>
-
-        // CHANGE THE orientation WHEN SELECTED
-        document.querySelectorAll('#orientation-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                orientation = btn.getAttribute('data-content');
-                document.querySelector('#lbl-orientation').innerHTML = orientation;
-            });
-        });
-
-        // CHANGE THE color WHEN SELECTED
-        document.querySelectorAll('#color-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                color = 'color=' + btn.getAttribute('data-content');                   // De color word met color= opgeslagen omdat als je geen color hebt je niet een lege parameter wilt doorsturen naar de api.
-                document.querySelector('#lbl-color').innerHTML = color.split('=')[1]; // aangezien color word opgeslagen als COLOR=green split die de string in tweeen zodat je alleen de kleur hebt
-            });
-        });
-
-
-
-        const colorSetting = new MDCMenu(document.querySelector('.dropdown-color-settings'));
-        document.querySelector('#dropdown-btn-color').addEventListener('click', () => {
-            colorSetting.open = true;
-        });
-        const orientationSetting = new MDCMenu(document.querySelector('.dropdown-orientation-settings'));
-        document.querySelector('#dropdown-btn-orientation').addEventListener('click', () => {
-            orientationSetting.open = true;
-        });
-
-
-    </script>
-    <!-- API SETTINGS / CALLS -->
-    <script>
-
-        const unsplashKey = `wj8aChJUAC2INucwlNEo1A6QQM8r_peWVL-okl_FeBg`;
-        const pexelsKey = `lxCzmL0zI12Sw4UdSufPVtHQuskaJIsKvfN8oG2SmAtTQiBj6p6P2vIn`;
-        const pixabayKey = `43930027-0dd439b78e38bfa692283b2c3`;
-
-        // Maybe advance this with local storage?
-        let currentApiCall = 'pexels';
-        let orientation = '';
-        let color = '';
-
-        // CHANGE PLACEHOLDER WHEN NEW API IS SET
-        document.querySelectorAll('.btn-api-point').forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentApiCall = btn.getAttribute('data-content');
-                document.getElementById('placeholder-api-call').innerHTML = currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1);
-                specificApiSettings();
-            })
-        });
-
-        // SINCE EACH API HAS DIFFERENT PARAMS SOME SETTINGS CANT BE USED
-        function specificApiSettings() {
-            // reset each button from orientation setting.
-            document.querySelectorAll('#orientation-btn').forEach(btn => {
-                btn.classList.remove('hidden');
-            })
-
-            // hides buttons that cant be used with selected api   
-            if (currentApiCall == 'pixabay') {
-                // The pixabay api does NOT support square orientations.
-                document.querySelector('.orientation-square').classList.add('hidden');
-            }
-        }
-
-
-
-
-    </script>
-    <script>
-        // API CALL
+        // Roept de API call aan met de goede endpoint
         document.querySelector('#search-button').addEventListener('click', () => {
 
             // CLEAR THE CURRENT IMAGES.
@@ -746,7 +659,6 @@
                 default:
                     break;
             }
-            console.log(endpoint);
 
         });
 
@@ -757,9 +669,3 @@
 </body>
 
 </html>
-
-<!-- Possible warning when chars of input exceed 20 -->
-<!-- Like and dislike images? using the api, when you can like with api make it likeable. -->
-<!-- Select own color? -->
-<!-- Progress indicators -->
-<!-- possible save lower quality images. -->

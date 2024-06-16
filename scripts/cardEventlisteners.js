@@ -1,9 +1,9 @@
+// Eventlisteners voor opgezochte foto's
 function addListeners(index) {
+    
+    
     // OPENS THE SHARE PROMPT UPON SHARE ICON CLICK
     const dialog = new MDCDialog(document.querySelector(`.mdc-dialog-${index}`));
-    // const list = new MDCList(document.querySelector('.mdc-dialog .mdc-list'));
-
-
     document.getElementById(`share-btn-${index}`).addEventListener('click', () => {
         dialog.open();
     });
@@ -11,6 +11,8 @@ function addListeners(index) {
     document.querySelector(`#copy-img-url-${index}`).addEventListener('click', () => {
         navigator.clipboard.writeText(document.querySelector(`#url-${index}`).getAttribute('data-content'));
     });
+
+    // SAVES THE IMAGES UPON CLICKING BOOMARK ICON
     document.querySelector(`#save-img-${index}`).addEventListener('click', () => {
         let btn = document.querySelector(`#save-img-${index}`);
         let bookmark = btn.querySelector('.fa-bookmark');
@@ -28,6 +30,9 @@ function addListeners(index) {
         };
     });
 }
+
+
+// Eventlisteners voor opgeslagen foto's
 function addListenerSaved(index){
     // OPENS THE SHARE PROMPT UPON SHARE ICON CLICK
     const dialog = new MDCDialog(document.querySelector(`.mdc-dialog-saved-${index}`));
@@ -37,9 +42,12 @@ function addListenerSaved(index){
         dialog.open();
     });
 
+    // de base64 word opgeslagen in de data-content attribute.
     document.querySelector(`#copy-img-url-saved-${index}`).addEventListener('click', () => {
-        navigator.clipboard.writeText(document.querySelector(`#url-${index}`).getAttribute('data-content'));
+        navigator.clipboard.writeText(document.querySelector(`#url-saved-${index}`).getAttribute('data-content'));
     });
+
+    // via de unsave functie wordt op base van ID een image verwijdered (unsave functie is in save.js)
     document.querySelector(`#delete-saved-${index}`).addEventListener('click', () => {
         unsave(index);
         console.log("removing:" + index);
