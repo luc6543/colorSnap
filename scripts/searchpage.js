@@ -54,10 +54,14 @@ const unsplashKey = `wj8aChJUAC2INucwlNEo1A6QQM8r_peWVL-okl_FeBg`;
 
         // CHANGE PLACEHOLDER WHEN NEW API IS SET
         document.querySelectorAll('.btn-api-point').forEach(btn => {
+            currentApiCall = btn.getAttribute('data-content');
+            specificApiSettings();
             btn.addEventListener('click', () => {
-                currentApiCall = btn.getAttribute('data-content');
-                document.getElementById('placeholder-api-call').innerHTML = currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1);
-                specificApiSettings();
+                try {
+                    document.getElementById('placeholder-api-call').innerHTML = currentApiCall.charAt(0).toUpperCase() + currentApiCall.slice(1);
+                } catch (error) {
+                    
+                }
             })
         });
 

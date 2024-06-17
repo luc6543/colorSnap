@@ -22,13 +22,11 @@ function getSavedInt(){
 
 function getRandomSaved(){
     let a = Math.floor(Math.random() * getSavedInt());
-    console.log(a);
     return a;
 }
 
 function getEmpty(){
     let a = getSavedInt();
-    console.log(a);
     for (let index = 0; index < a; index++) {
         if(localStorage.getItem(index) === null){
             return index;
